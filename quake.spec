@@ -2,7 +2,7 @@ Summary:	Quake for Linux
 Summary(pl):	Quake dla Linuksa
 Name:		quake
 Version:	1.06
-Release:	1
+Release:	2
 Vendor:		id Software
 License:	GPL except .pak file
 Group:		Applications/Games
@@ -18,6 +18,8 @@ Patch2:		%{name}-QWGL.patch
 Patch3:		%{name}-QWGLmouse.patch
 Patch4:		%{name}-GL.patch
 Patch5:		%{name}-basedir.patch
+Patch6:		%{name}-localdir.patch
+Patch7:		%{name}-nosound.patch
 URL:		http://www.idsoftware.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	lha
@@ -107,6 +109,8 @@ zawieraj±ce 1 epizod shareware.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 cp WinQuake/Makefile.linuxi386 WinQuake/Makefile
