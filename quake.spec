@@ -7,6 +7,9 @@ Vendor:		id Software
 URL:		http://www.idsoftware.com/
 Source0:	ftp://ftp.idsoftware.com/idstuff/source/q1source.zip
 Source1:	ftp://ftp.idsoftware.com/idstuff/quake/%{name}106.zip
+Source2:	%{name}.png
+Source3:	%{name}-gl.desktop
+Source4:	%{name}-x11.desktop
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-makefileQW.patch
 Patch2:		%{name}-QWGL.patch
@@ -76,9 +79,13 @@ lha -ef resource.1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/quake/id1}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/quake/id1,%{_pixmapsdir},%{_applnkdir}/Games/Arcade}
 
 install WinQuake/debugi386.glibc/bin/* $RPM_BUILD_ROOT%{_bindir}
+
+install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Games/Arcade
+install %{SOURCE4} $RPM_BUILD_ROOT%{_applnkdir}/Games/Arcade
 
 install QW/debugi386.glibc/qwcl $RPM_BUILD_ROOT%{_bindir}
 install QW/debugi386.glibc/qwcl.x11 $RPM_BUILD_ROOT%{_bindir}
@@ -98,12 +105,16 @@ install id1/* $RPM_BUILD_ROOT%{_datadir}/quake/id1
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/quake.x11
 %attr(755,root,root) %{_bindir}/qwcl.x11
+%{_pixmapsdir}/*
+%{_applnkdir}/Games/Arcade/quake-x11.desktop
 %doc WinQuake/docs/README.X11
 
 %files GL
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/glquake.glx
-%attr(755,root,root) %{_bindir}/glqwcl.glx
+%attr(4755,root,root) %{_bindir}/glquake.glx
+%attr(4755,root,root) %{_bindir}/glqwcl.glx
+%{_pixmapsdir}/*
+%{_applnkdir}/Games/Arcade/quake-gl.desktop
 %doc WinQuake/docs/readme.glquake QW/docs/glqwcl-readme.txt
 
 %files PAK
