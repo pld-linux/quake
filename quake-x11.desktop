@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=quake.x11
-Comment=Quake for Linux - x11 version
-Comment[pl]=Quake dla Linuxa - wersja x11
+Name=Quake X11
+Comment=Quake for Linux - X11 version
+Comment[pl]=Quake dla Linuxa - wersja X11
 Exec=quake.x11
 Icon=quake.png
 Terminal=0

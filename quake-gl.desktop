@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=quakeGL
+Name=QuakeGL
 Comment=Quake for Linux - GL version
 Comment[pl]=Quake dla Linuxa - wersja GL
 Exec=glquake.glx
