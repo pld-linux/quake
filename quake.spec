@@ -17,7 +17,7 @@ Patch3:		%{name}-QWGLmouse.patch
 Patch4:		%{name}-GL.patch
 Patch5:		%{name}-basedir.patch
 Group:		Applications/Games
-Copyright:	Restricted
+License:	GPL
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	XFree86-OpenGL-devel
 BuildRequires:	XFree86-driver-nvidia
@@ -58,6 +58,7 @@ Requires:	quake
 Summary:	Quake for Linux - shareware episode
 Summary(pl):	Quake dla Linuksa - epizod shareware
 Group:		Applications/Games
+License:	non-commercial
 Requires:	quake
 
 %description PAK
@@ -118,8 +119,8 @@ install id1/* $RPM_BUILD_ROOT%{_datadir}/quake/id1
 
 %files GL
 %defattr(644,root,root,755)
-%attr(4755,root,root) %{_bindir}/glquake.glx
-%attr(4755,root,root) %{_bindir}/glqwcl.glx
+%attr(755,root,root) %{_bindir}/glquake.glx
+%attr(755,root,root) %{_bindir}/glqwcl.glx
 %{_pixmapsdir}/*
 %{_applnkdir}/Games/Arcade/quake-gl.desktop
 %doc WinQuake/docs/readme.glquake QW/docs/glqwcl-readme.txt
