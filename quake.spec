@@ -7,7 +7,9 @@ Vendor:		id Software
 License:	GPL except .pak file
 Group:		Applications/Games
 Source0:	ftp://ftp.idsoftware.com/idstuff/source/q1source.zip
+# Source0-md5:	70a802bd815a61a99e6c1c9a4eaeb0f2
 Source1:	ftp://ftp.idsoftware.com/idstuff/quake/%{name}106.zip
+# Source1-md5:	8cee4d03ee092909fdb6a4f84f0c1357
 Source2:	%{name}.png
 Source3:	%{name}-gl.desktop
 Source4:	%{name}-x11.desktop
