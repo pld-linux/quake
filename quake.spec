@@ -10,7 +10,7 @@ Source1:	ftp://ftp.idsoftware.com/idstuff/quake/%{name}106.zip
 Source2:	%{name}.png
 Source3:	%{name}-gl.desktop
 Source4:	%{name}-x11.desktop
-Source4:	%{name}-svga.desktop
+Source5:	%{name}-svga.desktop
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-makefileQW.patch
 Patch2:		%{name}-QWGL.patch
