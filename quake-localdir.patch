@@ -1,0 +1,298 @@
+diff -ur quake-1.06.orig/QW/client/common.c quake-1.06/QW/client/common.c
+--- quake-1.06.orig/QW/client/common.c	Tue May 13 00:00:18 2003
++++ quake-1.06/QW/client/common.c	Wed May 14 00:07:37 2003
+@@ -1250,6 +1250,18 @@
+ 	return string;	
+ }
+ 
++char	*va2(char *format, ...)
++{
++	va_list		argptr;
++	static char		string[1024];
++	
++	va_start (argptr, format);
++	vsprintf (string, format,argptr);
++	va_end (argptr);
++
++	return string;	
++}
++
+ 
+ /// just for debugging
+ int	memsearch (byte *start, int count, int search)
+@@ -1309,8 +1321,10 @@
+ 
+ #define	MAX_FILES_IN_PACK	2048
+ 
++char	com_gamedir_pak[MAX_OSPATH];
+ char	com_gamedir[MAX_OSPATH];
+ char	com_basedir[MAX_OSPATH];
++char	com_localdir[MAX_OSPATH];
+ 
+ typedef struct searchpath_s
+ {
+@@ -1703,11 +1717,11 @@
+ ================
+ COM_AddGameDirectory
+ 
+-Sets com_gamedir, adds the directory to the head of the path,
++Sets com_gamedir, com_gamedir_pak, adds the directory to the head of the path,
+ then loads and adds pak1.pak pak2.pak ... 
+ ================
+ */
+-void COM_AddGameDirectory (char *dir)
++void COM_AddGameDirectory (char *dir, char *dir2)
+ {
+ 	int				i;
+ 	searchpath_t	*search;
+@@ -1719,7 +1733,8 @@
+ 		strcpy(gamedirfile, ++p);
+ 	else
+ 		strcpy(gamedirfile, p);
+-	strcpy (com_gamedir, dir);
++	strcpy (com_gamedir_pak, dir);
++	strcpy (com_gamedir, dir2);
+ 
+ //
+ // add the directory to the search path
+@@ -1795,13 +1810,14 @@
+ 	if (!strcmp(dir,"id1") || !strcmp(dir, "qw"))
+ 		return;
+ 
+-	sprintf (com_gamedir, "%s/%s", com_basedir, dir);
++	sprintf (com_gamedir_pak, "%s/%s", com_basedir, dir);
++	sprintf (com_gamedir, "%s/%s", com_localdir, dir);
+ 
+ 	//
+ 	// add the directory to the search path
+ 	//
+ 	search = Z_Malloc (sizeof(searchpath_t));
+-	strcpy (search->filename, com_gamedir);
++	strcpy (search->filename, com_gamedir_pak);
+ 	search->next = com_searchpaths;
+ 	com_searchpaths = search;
+ 
+@@ -1810,7 +1826,7 @@
+ 	//
+ 	for (i=0 ; ; i++)
+ 	{
+-		sprintf (pakfile, "%s/pak%i.pak", com_gamedir, i);
++		sprintf (pakfile, "%s/pak%i.pak", com_gamedir_pak, i);
+ 		pak = COM_LoadPackFile (pakfile);
+ 		if (!pak)
+ 			break;
+@@ -1841,10 +1857,20 @@
+ 		strcpy (com_basedir, "/usr/share/quake");
+ 
+ //
++// -localdir <path>
++// Overrides the system supplied local (savings) directory (under id1)
++//
++	i = COM_CheckParm ("-localdir");
++	if (i && i < com_argc-1)
++		strcpy (com_localdir, com_argv[i+1]);
++	else
++		sprintf (com_localdir, "%s/%s", getenv("HOME"), ".quake");
++
++//
+ // start up with id1 by default
+ //
+-	COM_AddGameDirectory (va("%s/id1", com_basedir) );
+-	COM_AddGameDirectory (va("%s/qw", com_basedir) );
++	COM_AddGameDirectory (va("%s/id1", com_basedir), va2("%s/id1", com_localdir) );
++	COM_AddGameDirectory (va("%s/qw", com_basedir), va2("%s/qw", com_localdir) );
+ 
+ 	// any set gamedirs will be freed up to here
+ 	com_base_searchpaths = com_searchpaths;
+diff -ur quake-1.06.orig/QW/client/common.h quake-1.06/QW/client/common.h
+--- quake-1.06.orig/QW/client/common.h	Tue Dec 21 15:49:04 1999
++++ quake-1.06/QW/client/common.h	Wed May 14 00:07:37 2003
+@@ -183,7 +183,8 @@
+ void COM_DefaultExtension (char *path, char *extension);
+ 
+ char	*va(char *format, ...);
+-// does a varargs printf into a temp buffer
++char	*va2(char *format, ...);
++// do a varargs printf into a temp buffer
+ 
+ 
+ //============================================================================
+@@ -191,6 +192,7 @@
+ extern int com_filesize;
+ struct cache_user_s;
+ 
++extern	char	com_gamedir_pak[MAX_OSPATH];
+ extern	char	com_gamedir[MAX_OSPATH];
+ 
+ void COM_WriteFile (char *filename, void *data, int len);
+diff -ur quake-1.06.orig/QW/server/sv_ccmds.c quake-1.06/QW/server/sv_ccmds.c
+--- quake-1.06.orig/QW/server/sv_ccmds.c	Tue Dec 21 15:51:18 1999
++++ quake-1.06/QW/server/sv_ccmds.c	Wed May 14 00:07:37 2003
+@@ -741,7 +741,8 @@
+ 
+ 	if (Cmd_Argc() == 1)
+ 	{
+-		Con_Printf ("Current gamedir: %s\n", com_gamedir);
++		Con_Printf ("Current gamedir      : %s\n", com_gamedir_pak);
++		Con_Printf ("Current local gamedir: %s\n", com_gamedir);
+ 		return;
+ 	}
+ 
+diff -ur quake-1.06.orig/WinQuake/common.c quake-1.06/WinQuake/common.c
+--- quake-1.06.orig/WinQuake/common.c	Tue May 13 00:00:18 2003
++++ quake-1.06/WinQuake/common.c	Wed May 14 21:41:42 2003
+@@ -1178,6 +1178,18 @@
+ 	return string;  
+ }
+ 
++char    *va2(char *format, ...)
++{
++	va_list         argptr;
++	static char             string[1024];
++	
++	va_start (argptr, format);
++	vsprintf (string, format,argptr);
++	va_end (argptr);
++
++	return string;  
++}
++
+ 
+ /// just for debugging
+ int     memsearch (byte *start, int count, int search)
+@@ -1238,6 +1250,7 @@
+ #define MAX_FILES_IN_PACK       2048
+ 
+ char    com_cachedir[MAX_OSPATH];
++char    com_gamedir_pak[MAX_OSPATH];
+ char    com_gamedir[MAX_OSPATH];
+ 
+ typedef struct searchpath_s
+@@ -1289,7 +1302,6 @@
+ 	if (handle == -1)
+ 	{
+ 		Sys_Printf ("COM_WriteFile: failed on %s\n", name);
+-		return;
+ 	}
+ 	
+ 	Sys_Printf ("COM_WriteFile: %s\n", name);
+@@ -1682,18 +1694,19 @@
+ ================
+ COM_AddGameDirectory
+ 
+-Sets com_gamedir, adds the directory to the head of the path,
++Sets com_gamedir, com_gamedir_pak, adds the directory to the head of the path,
+ then loads and adds pak1.pak pak2.pak ... 
+ ================
+ */
+-void COM_AddGameDirectory (char *dir)
++void COM_AddGameDirectory (char *dir, char *dir2)
+ {
+ 	int                             i;
+ 	searchpath_t    *search;
+ 	pack_t                  *pak;
+ 	char                    pakfile[MAX_OSPATH];
+ 
+-	strcpy (com_gamedir, dir);
++	strcpy (com_gamedir_pak, dir);
++	strcpy (com_gamedir, dir2);
+ 
+ //
+ // add the directory to the search path
+@@ -1733,6 +1746,7 @@
+ {
+ 	int             i, j;
+ 	char    basedir[MAX_OSPATH];
++	char    localdir[MAX_OSPATH];
+ 	searchpath_t    *search;
+ 
+ //
+@@ -1754,6 +1768,24 @@
+ 	}
+ 
+ //
++// -localdir <path>
++// Overrides the system supplied local (savings) directory (under GAMENAME)
++//
++	i = COM_CheckParm ("-localdir");
++	if (i && i < com_argc-1)
++		strcpy (localdir, com_argv[i+1]);
++	else
++		sprintf (localdir, "%s/%s", getenv("HOME"), ".quake");
++
++	j = strlen (localdir);
++
++	if (j > 0)
++	{
++		if ((localdir[j-1] == '\\') || (localdir[j-1] == '/'))
++			localdir[j-1] = 0;
++	}
++
++//
+ // -cachedir <path>
+ // Overrides the system supplied cache directory (NULL or /qcache)
+ // -cachedir - will disable caching.
+@@ -1774,12 +1806,12 @@
+ //
+ // start up with GAMENAME by default (id1)
+ //
+-	COM_AddGameDirectory (va("%s/"GAMENAME, basedir) );
++	COM_AddGameDirectory (va("%s/"GAMENAME, basedir), va2("%s/"GAMENAME, localdir) );
+ 
+ 	if (COM_CheckParm ("-rogue"))
+-		COM_AddGameDirectory (va("%s/rogue", basedir) );
++		COM_AddGameDirectory (va("%s/rogue", basedir), va2("%s/rogue", localdir) );
+ 	if (COM_CheckParm ("-hipnotic"))
+-		COM_AddGameDirectory (va("%s/hipnotic", basedir) );
++		COM_AddGameDirectory (va("%s/hipnotic", basedir), va2("%s/hipnotic", localdir) );
+ 
+ //
+ // -game <gamedir>
+@@ -1789,9 +1821,15 @@
+ 	if (i && i < com_argc-1)
+ 	{
+ 		com_modified = true;
+-		COM_AddGameDirectory (va("%s/%s", basedir, com_argv[i+1]));
++		COM_AddGameDirectory (va("%s/%s", basedir, com_argv[i+1]), va2("%s/%s", localdir, com_argv[i+1]));
+ 	}
+ 
++// ignore mkdir errors: they are either insignificant
++// or will be also reported later. Execution should continue
++
++	Sys_mkdir(localdir);
++	Sys_mkdir(com_gamedir);
++
+ //
+ // -path <dir or packfile> [<dir or packfile>] ...
+ // Fully specifies the exact serach path, overriding the generated one
+diff -ur quake-1.06.orig/WinQuake/common.h quake-1.06/WinQuake/common.h
+--- quake-1.06.orig/WinQuake/common.h	Tue Dec 21 15:54:20 1999
++++ quake-1.06/WinQuake/common.h	Wed May 14 00:07:37 2003
+@@ -157,6 +157,7 @@
+ void COM_DefaultExtension (char *path, char *extension);
+ 
+ char	*va(char *format, ...);
++char	*va2(char *format, ...);
+ // does a varargs printf into a temp buffer
+ 
+ 
+@@ -165,6 +166,7 @@
+ extern int com_filesize;
+ struct cache_user_s;
+ 
++extern	char	com_gamedir_pak[MAX_OSPATH];
+ extern	char	com_gamedir[MAX_OSPATH];
+ 
+ void COM_WriteFile (char *filename, void *data, int len);
+diff -ur quake-1.06.orig/WinQuake/console.c quake-1.06/WinQuake/console.c
+--- quake-1.06.orig/WinQuake/console.c	Tue Dec 21 15:53:24 1999
++++ quake-1.06/WinQuake/console.c	Wed May 14 00:07:37 2003
+@@ -219,7 +219,7 @@
+ 
+ 	if (con_debuglog)
+ 	{
+-		if (strlen (com_gamedir) < (MAXGAMEDIRLEN - strlen (t2)))
++		if (strlen (com_gamedir_pak) < (MAXGAMEDIRLEN - strlen (t2)))
+ 		{
+ 			sprintf (temp, "%s%s", com_gamedir, t2);
+ 			unlink (temp);
