@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=quakeGL
+Comment=Quake for Linux - GL version
+Comment[pl]=Quake dla Linuxa - wersja GL
+Exec=glquake.glx
+Icon=quake.png
+Terminal=0
+Type=Application
