@@ -12,6 +12,7 @@ Patch1:		%{name}-makefileQW.patch
 Patch2:		%{name}-QWGL.patch
 Patch3:		%{name}-QWGLmouse.patch
 Patch4:		%{name}-GL.patch
+Patch5:		%{name}-basedir.patch
 Group:		Applications/Games
 Copyright:	Restricted
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -64,6 +65,7 @@ zawierajace 1 epizod shareware.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 cp WinQuake/Makefile.linuxi386 WinQuake/Makefile
