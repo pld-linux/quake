@@ -4,7 +4,8 @@ Name:		quake
 Version:	1.06
 Release:	1
 Vendor:		id Software
-URL:		http://www.idsoftware.com/
+License:	GPL except .pak file
+Group:		Applications/Games
 Source0:	ftp://ftp.idsoftware.com/idstuff/source/q1source.zip
 Source1:	ftp://ftp.idsoftware.com/idstuff/quake/%{name}106.zip
 Source2:	%{name}.png
@@ -17,13 +18,13 @@ Patch2:		%{name}-QWGL.patch
 Patch3:		%{name}-QWGLmouse.patch
 Patch4:		%{name}-GL.patch
 Patch5:		%{name}-basedir.patch
-Group:		Applications/Games
-License:	GPL except .pak file
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-BuildRequires:	XFree86-OpenGL-devel
-BuildRequires:	XFree86-driver-nvidia
+URL:		http://www.idsoftware.com/
+BuildRequires:	OpenGL-devel
 BuildRequires:	lha
 BuildRequires:	svgalib-devel
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_noautoreqdep	libGL.so.1 libGLU.so.1
 
 %description
 "The most important PC game ever."
@@ -34,8 +35,8 @@ BuildRequires:	svgalib-devel
 %package common
 Summary:	Quake for Linux - common files
 Summary(pl):	Quake dla Linuksa - pliki wspólne
-Group:		Applications/Games
 License:	GPL
+Group:		Applications/Games
 
 %description common
 "The most important PC game ever" - common files.
@@ -46,8 +47,8 @@ License:	GPL
 %package svga
 Summary:	Quake for Linux - svgalib version
 Summary(pl):	Quake dla Linuksa - wersja korzystaj±ca z svgalib
-Group:		Applications/Games
 License:	GPL
+Group:		Applications/Games
 Requires:	quake-common
 
 %description svga
@@ -59,8 +60,8 @@ Requires:	quake-common
 %package X11
 Summary:	Quake for Linux - X11
 Summary(pl):	Quake dla Linuksa - X11
-Group:		Applications/Games
 License:	GPL
+Group:		Applications/Games
 Requires:	quake-common
 
 %description X11
@@ -72,8 +73,9 @@ Requires:	quake-common
 %package GL
 Summary:	Quake for Linux - GL
 Summary(pl):	Quake dla Linuksa - GL
-Group:		Applications/Games
 License:	GPL
+Group:		Applications/Games
+Requires:	OpenGL
 Requires:	quake-common
 
 %description GL
@@ -85,8 +87,8 @@ Requires:	quake-common
 %package PAK
 Summary:	Quake for Linux - shareware episode
 Summary(pl):	Quake dla Linuksa - epizod shareware
-Group:		Applications/Games
 License:	non-commercial
+Group:		Applications/Games
 Requires:	quake-common
 
 %description PAK
@@ -129,6 +131,9 @@ install QW/debugi386.glibc/glqwcl.glx $RPM_BUILD_ROOT%{_bindir}
 
 install id1/* $RPM_BUILD_ROOT%{_datadir}/quake/id1
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %files common
 %defattr(644,root,root,755)
 %doc WinQuake/docs/INSTALL WinQuake/docs/INSTALL.Quake WinQuake/docs/README QW/docs/qwcl-readme.txt QW/docs/readme*
@@ -158,8 +163,5 @@ install id1/* $RPM_BUILD_ROOT%{_datadir}/quake/id1
 
 %files PAK
 %defattr(644,root,root,755)
-%{_datadir}/*
 %doc *.txt
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+%{_datadir}/quake
