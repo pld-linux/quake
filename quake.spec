@@ -26,6 +26,7 @@ URL:		http://www.idsoftware.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	lha
 BuildRequires:	svgalib-devel
+BuildRequires:	unzip
 ExclusiveArch:	%{ix86}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
