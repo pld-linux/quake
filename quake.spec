@@ -1,5 +1,5 @@
-Summary(pl):	Quake dla Linuxa
 Summary:	Quake for Linux
+Summary(pl):	Quake dla Linuksa
 Name:		quake
 Version:	1.06
 Release:	1
@@ -25,41 +25,48 @@ BuildRequires:	lha
 BuildRequires:	svgalib-devel
 
 %description
-"The most important PC game ever" - PC ZONE SVGA client
+"The most important PC game ever" - PC ZONE SVGA client.
 
 %description -l pl
-"Najwazniejsza gra wszechczasow na PC" - PC ZONE Klient dla SVGA
+"Najwa¿niejsza gra wszechczasów na PC" - klient PC ZONE dla SVGA.
 
-%package x11
-Summary:	Quake dla Linuxa - x11
-Summary(pl):	Quake for Linux - x11
+%package X11
+Summary:	Quake for Linux - X11
+Summary(pl):	Quake dla Linuksa - X11
 Group:		Applications/Games
 Requires:	quake
 
-%description x11
-"The most important PC game ever" - PC ZONE x11 client
+%description X11
+"The most important PC game ever" - PC ZONE X11 client.
 
-%description x11 -l pl
-"Najwazniejsza gra wszechczasow na PC" - PC ZONE Klient dla x11
+%description X11 -l pl
+"Najwa¿niejsza gra wszechczasów na PC" - klient PC ZONE dla X11.
 
 %package GL
-Summary:	Quake dla Linuxa - GL
-Summary(pl):	Quake for Linux - GL
+Summary:	Quake for Linux - GL
+Summary(pl):	Quake dla Linuksa - GL
 Group:		Applications/Games
 Requires:	quake
+
+%description GL
+"The most important PC game ever" - PC ZONE GL client.
 
 %description GL -l pl
-"Najwazniejsza gra wszechczasow na PC" - PC ZONE Klient dla GL
+"Najwa¿niejsza gra wszechczasów na PC" - klient PC ZONE dla GL.
 
 %package PAK
-Summary:	Quake dla Linuxa - epizod shareware
-Summary(pl):	Quake for Linux - shareware episode
+Summary:	Quake for Linux - shareware episode
+Summary(pl):	Quake dla Linuksa - epizod shareware
 Group:		Applications/Games
 Requires:	quake
 
+%description PAK
+"The most important PC game ever" - PC ZONE PAK files containing one
+shareware episode.
+
 %description PAK -l pl
-"Najwazniejsza gra wszechczasow na PC" - PC ZONE Pliki PAK,
-zawierajace 1 epizod shareware.
+"Najwa¿niejsza gra wszechczasów na PC" - pliki PC ZONE PAK,
+zawieraj±ce 1 epizod shareware.
 
 %prep
 %setup -q -c -a 1
@@ -101,7 +108,7 @@ install id1/* $RPM_BUILD_ROOT%{_datadir}/quake/id1
 %attr(755,root,root) %{_bindir}/qwsv
 %doc WinQuake/docs/INSTALL WinQuake/docs/INSTALL.Quake WinQuake/docs/README WinQuake/docs/readme.squake QW/docs/qwcl-readme.txt QW/docs/readme*
 
-%files x11
+%files X11
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/quake.x11
 %attr(755,root,root) %{_bindir}/qwcl.x11
