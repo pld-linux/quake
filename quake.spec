@@ -18,6 +18,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	XFree86-OpenGL-devel
 BuildRequires:	XFree86-driver-nvidia
 BuildRequires:	lha
+BuildRequires:	svgalib-devel
 
 %description
 "The most important PC game ever" - PC ZONE SVGA client
