@@ -1,0 +1,177 @@
+--- quake-1.06/WinQuake/gl_vidlinux.c.orig	Thu Feb 27 01:59:06 2003
++++ quake-1.06/WinQuake/gl_vidlinux.c	Thu Feb 27 01:59:33 2003
+@@ -33,7 +33,7 @@
+ #include "vgamouse.h"
+ 
+ #include "quakedef.h"
+-#include "GL/fxmesa.h"
++/*#include "GL/fxmesa.h"*/
+ 
+ #define WARP_WIDTH              320
+ #define WARP_HEIGHT             200
+@@ -511,9 +511,9 @@
+ 			return resolutions[i][2];
+ 		}
+         
+-	*width = 640;
+-	*height = 480;
+-	return GR_RESOLUTION_640x480;
++	*width = 800;
++	*height = 600;
++	return GR_RESOLUTION_800x600;
+ }
+ 
+ qboolean VID_Is8bit(void)
+@@ -610,7 +610,7 @@
+ 	int i;
+ 	GLint attribs[32];
+ 	char	gldir[MAX_OSPATH];
+-	int width = 640, height = 480;
++	int width = 800, height = 600;
+ 
+ 	Init_KBD();
+ 
+--- quake-1.06/WinQuake/gl_vidlinuxglx.c.orig	Thu Feb 27 01:53:00 2003
++++ quake-1.06/WinQuake/gl_vidlinuxglx.c	Thu Feb 27 02:09:25 2003
+@@ -126,7 +126,7 @@
+ 	key = 0;
+ 
+ 	XLookupString(ev, buf, sizeof buf, &keysym, 0);
+-
++	
+ 	switch(keysym)
+ 	{
+ 		case XK_KP_Page_Up:	 
+@@ -308,6 +308,8 @@
+ 	mouse_active = true;
+ 
+ //	XSync(dpy, True);
++
++//	Con_Print("Grabs installed\n");
+ }
+ 
+ static void uninstall_grabs(void)
+@@ -327,6 +329,8 @@
+ 	XUndefineCursor(dpy, win);
+ 
+ 	mouse_active = false;
++
++//	Con_Print("Grabs uninstalled\n");
+ }
+ 
+ static void HandleEvents(void)
+@@ -341,9 +345,11 @@
+ 	if (!dpy)
+ 		return;
+ 
+-	while (XPending(dpy)) {
++	while (XPending(dpy)>0) {
+ 		XNextEvent(dpy, &event);
+ 
++		//Con_SafePrintf("Event Type %i\n", event.type);
++
+ 		switch (event.type) {
+ 		case KeyPress:
+ 		case KeyRelease:
+@@ -353,6 +359,7 @@
+ 		case MotionNotify:
+ 			if (mouse_active) {
+ 				if (dgamouse) {
++				//Con_SafePrintf("Motion Notify Event %i %i\n", mx, my);
+ 					mx += (event.xmotion.x + win_x) * 2;
+ 					my += (event.xmotion.y + win_y) * 2;
+ 				} 
+@@ -396,11 +403,13 @@
+ 			break;
+ 
+ 		case CreateNotify :
++			//Con_SafePrintf("Create Notify Event\n");
+ 			win_x = event.xcreatewindow.x;
+ 			win_y = event.xcreatewindow.y;
+ 			break;
+ 
+ 		case ConfigureNotify :
++			//Con_SafePrintf("Configure Notify Event\n");
+ 			win_x = event.xconfigure.x;
+ 			win_y = event.xconfigure.y;
+ 			break;
+@@ -431,6 +440,8 @@
+ 		return;
+ 
+ 	if (!mouse_active) {
++	//Con_SafePrintf("Mouse available %i aktive %i\n", mouse_avail, mouse_active);
++
+ 		mx = my = 0; // don't spazz
+ 		install_grabs();
+ 		mouse_active = true;
+@@ -449,7 +460,9 @@
+ 		if (win)
+ 			XDestroyWindow(dpy, win);
+ 		if (vidmode_active)
++		{
+ 			XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[0]);
++		}
+ 		XCloseDisplay(dpy);
+ 	}
+ 	vidmode_active = false;
+@@ -700,7 +713,7 @@
+ 			(gl_vendor && strstr(gl_vendor, "3Dfx")))
+ 			vid_gamma = 1;
+ 		else
+-			vid_gamma = 0.7; // default to 0.7 on non-3dfx hardware
++			vid_gamma = 1.5; // default to 0.7 on non-3dfx hardware
+ 	} else
+ 		vid_gamma = Q_atof(com_argv[i+1]);
+ 
+@@ -731,7 +744,7 @@
+ 		None
+ 	};
+ 	char	gldir[MAX_OSPATH];
+-	int width = 640, height = 480;
++	int width = 800, height = 600;
+ 	XSetWindowAttributes attr;
+ 	unsigned long mask;
+ 	Window root;
+@@ -766,7 +779,7 @@
+ 	if ((i = COM_CheckParm("-conwidth")) != 0)
+ 		vid.conwidth = Q_atoi(com_argv[i+1]);
+ 	else
+-		vid.conwidth = 640;
++		vid.conwidth = 800;
+ 
+ 	vid.conwidth &= 0xfff8; // make it a multiple of eight
+ 
+@@ -848,6 +861,7 @@
+ 	attr.border_pixel = 0;
+ 	attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
+ 	attr.event_mask = X_MASK;
++	
+ 	if (vidmode_active) {
+ 		mask = CWBackPixel | CWColormap | CWSaveUnder | CWBackingStore | 
+ 			CWEventMask | CWOverrideRedirect;
+@@ -869,7 +883,9 @@
+ 		XFlush(dpy);
+ 		// Move the viewport to top left
+ 		XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
++		//mouse_avail = true;
+ 	}
++	mouse_avail = true;
+ 
+ 	XFlush(dpy);
+ 
+@@ -903,6 +919,7 @@
+ 	VID_Init8bitPalette();
+ 
+ 	Con_SafePrintf ("Video mode %dx%d initialized.\n", width, height);
++	Con_SafePrintf ("Up and running for PLD ;) \n");
+ 
+ 	vid.recalc_refdef = 1;				// force a surface cache flush
+ }
+@@ -932,6 +949,7 @@
+ */
+ void IN_Commands (void)
+ {
++	//Con_SafePrintf("IN_Commands called\n");
+ 	if (!dpy || !win)
+ 		return;
+ 
