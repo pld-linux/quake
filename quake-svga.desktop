@@ -4,5 +4,5 @@ Comment=Quake for Linux - svgalib version
 Comment[pl]=Quake dla Linuxa - wersja svgalib
 Exec=squake
 Icon=quake.png
-Terminal=0
+Terminal=false
 Type=Application

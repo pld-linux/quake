@@ -4,5 +4,5 @@ Comment=Quake for Linux - X11 version
 Comment[pl]=Quake dla Linuxa - wersja X11
 Exec=quake.x11
 Icon=quake.png
-Terminal=0
+Terminal=false
 Type=Application
