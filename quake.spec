@@ -2,7 +2,7 @@ Summary:	Quake for Linux
 Summary(pl):	Quake dla Linuksa
 Name:		quake
 Version:	1.06
-Release:	2
+Release:	3
 Vendor:		id Software
 License:	GPL except .pak file
 Group:		Applications/Games
@@ -114,6 +114,11 @@ zawieraj±ce 1 epizod shareware.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+
+# Fix "Error: memory overwrite in Sys_Printf"
+%{__sed} -i -e 's,text\[1024\],text\[2048\],g' \
+	QW/client/sys_linux.c \
+	WinQuake/sys_linux.c
 
 %build
 cp WinQuake/Makefile.linuxi386 WinQuake/Makefile
