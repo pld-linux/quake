@@ -1,0 +1,52 @@
+--- quake-1.06/WinQuake/Makefile.linuxi386.orig	Thu Feb 27 15:44:44 2003
++++ quake-1.06/WinQuake/Makefile.linuxi386	Thu Feb 27 15:45:46 2003
+@@ -13,7 +13,7 @@
+ RPM_RELEASE=5
+ 
+ ifneq (,$(findstring libc6,$(shell if [ -e /lib/libc.so.6 ];then echo libc6;fi)))
+-GLIBC=-glibc
++GLIBC=.glibc
+ else
+ GLIBC=
+ endif
+@@ -25,15 +25,9 @@
+ endif
+ NOARCH=noarch
+ 
+-MOUNT_DIR=/grog/Projects/WinQuake
+-MASTER_DIR=/grog/Projects/QuakeMaster
+-MESA_DIR=/usr/local/src/Mesa-2.6
+-TDFXGL_DIR = /home/zoid/3dfxgl
+-
+ BUILD_DEBUG_DIR=debug$(ARCH)$(GLIBC)
+ BUILD_RELEASE_DIR=release$(ARCH)$(GLIBC)
+-
+-EGCS=/usr/local/egcs-1.1.2/bin/gcc
++EGCS=gcc
+ CC=$(EGCS)
+ 
+ BASE_CFLAGS=-Dstricmp=strcasecmp
+@@ -45,10 +39,10 @@
+ XLDFLAGS=-L/usr/X11R6/lib -lX11 -lXext -lXxf86dga
+ XCFLAGS=-DX11
+ 
+-MESAGLLDFLAGS=-L/usr/X11/lib -L/usr/local/lib -L$(MESA_DIR)/lib -lMesaGL -lglide2x -lX11 -lXext -ldl
++MESAGLLDFLAGS=-L/usr/X11R6/lib -L/usr/local/lib -L$(MESA_DIR)/lib -lMesaGL -lglide2x -lX11 -lXext -ldl
+ TDFXGLLDFLAGS=-L$(TDFXGL_DIR)/release$(ARCH)$(GLIBC) -l3dfxgl -lglide2x -ldl
+-GLLDFLAGS=-L/usr/X11/lib -L/usr/local/lib -lGL -lX11 -lXext -ldl -lXxf86dga -lXxf86vm -lm
+-GLCFLAGS=-DGLQUAKE -I$(MESA_DIR)/include -I/usr/include/glide
++GLLDFLAGS=-L/usr/X11R6/lib -L/usr/local/lib -lGL -lX11 -lXext -ldl -lXxf86dga -lXxf86vm -lm
++GLCFLAGS=-DGLQUAKE -I$(MESA_DIR)/include -I/usr/include/glide -I/usr/X11R6/include
+ 
+ DO_CC=$(CC) $(CFLAGS) -o $@ -c $<
+ DO_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) -o $@ -c $<
+@@ -65,9 +59,7 @@
+ #############################################################################
+ 
+ TARGETS=$(BUILDDIR)/bin/squake \
+-	$(BUILDDIR)/bin/glquake \
+ 	$(BUILDDIR)/bin/glquake.glx \
+-	$(BUILDDIR)/bin/glquake.3dfxgl \
+ 	$(BUILDDIR)/bin/quake.x11
+ 	# $(BUILDDIR)/bin/unixded
+ 
