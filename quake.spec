@@ -2,7 +2,7 @@ Summary:	Quake for Linux
 Summary(pl):	Quake dla Linuksa
 Name:		quake
 Version:	1.06
-Release:	3
+Release:	4
 Vendor:		id Software
 License:	GPL except .pak file
 Group:		Applications/Games
@@ -129,12 +129,12 @@ lha -ef resource.1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/quake/id1,%{_pixmapsdir},%{_applnkdir}/Games/FPP}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/quake/id1,%{_pixmapsdir},%{_desktopdir}}
 
 install WinQuake/debugi386.glibc/bin/* $RPM_BUILD_ROOT%{_bindir}
 
 install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
-install %{SOURCE3} %{SOURCE4} %{SOURCE5} $RPM_BUILD_ROOT%{_applnkdir}/Games/FPP
+install %{SOURCE3} %{SOURCE4} %{SOURCE5} $RPM_BUILD_ROOT%{_desktopdir}
 
 install QW/debugi386.glibc/qwcl $RPM_BUILD_ROOT%{_bindir}
 install QW/debugi386.glibc/qwcl.x11 $RPM_BUILD_ROOT%{_bindir}
@@ -157,21 +157,21 @@ rm -rf $RPM_BUILD_ROOT
 %doc WinQuake/docs/readme.squake
 %attr(755,root,root) %{_bindir}/squake
 %attr(755,root,root) %{_bindir}/qwcl
-%{_applnkdir}/Games/FPP/quake-svga.desktop
+%{_applnkdir}/quake-svga.desktop
 
 %files X11
 %defattr(644,root,root,755)
 %doc WinQuake/docs/README.X11
 %attr(755,root,root) %{_bindir}/quake.x11
 %attr(755,root,root) %{_bindir}/qwcl.x11
-%{_applnkdir}/Games/FPP/quake-x11.desktop
+%{_applnkdir}/quake-x11.desktop
 
 %files GL
 %defattr(644,root,root,755)
 %doc WinQuake/docs/readme.glquake QW/docs/glqwcl-readme.txt
 %attr(755,root,root) %{_bindir}/glquake.glx
 %attr(755,root,root) %{_bindir}/glqwcl.glx
-%{_applnkdir}/Games/FPP/quake-gl.desktop
+%{_applnkdir}/quake-gl.desktop
 
 %files PAK
 %defattr(644,root,root,755)
