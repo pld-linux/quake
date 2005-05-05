@@ -157,21 +157,21 @@ rm -rf $RPM_BUILD_ROOT
 %doc WinQuake/docs/readme.squake
 %attr(755,root,root) %{_bindir}/squake
 %attr(755,root,root) %{_bindir}/qwcl
-%{_applnkdir}/quake-svga.desktop
+%{_desktopdir}/quake-svga.desktop
 
 %files X11
 %defattr(644,root,root,755)
 %doc WinQuake/docs/README.X11
 %attr(755,root,root) %{_bindir}/quake.x11
 %attr(755,root,root) %{_bindir}/qwcl.x11
-%{_applnkdir}/quake-x11.desktop
+%{_desktopdir}/quake-x11.desktop
 
 %files GL
 %defattr(644,root,root,755)
 %doc WinQuake/docs/readme.glquake QW/docs/glqwcl-readme.txt
 %attr(755,root,root) %{_bindir}/glquake.glx
 %attr(755,root,root) %{_bindir}/glqwcl.glx
-%{_applnkdir}/quake-gl.desktop
+%{_desktopdir}/quake-gl.desktop
 
 %files PAK
 %defattr(644,root,root,755)
