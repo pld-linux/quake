@@ -1,5 +1,5 @@
 Summary:	Quake for Linux
-Summary(pl):	Quake dla Linuksa
+Summary(pl.UTF-8):   Quake dla Linuksa
 Name:		quake
 Version:	1.06
 Release:	4
@@ -34,24 +34,24 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 "The most important PC game ever."
 
-%description -l pl
-"Najwa縩iejsza gra wszechczas體 na PC."
+%description -l pl.UTF-8
+"Najwa偶niejsza gra wszechczas贸w na PC."
 
 %package common
 Summary:	Quake for Linux - common files
-Summary(pl):	Quake dla Linuksa - pliki wsp髄ne
+Summary(pl.UTF-8):   Quake dla Linuksa - pliki wsp贸lne
 License:	GPL
 Group:		Applications/Games
 
 %description common
 "The most important PC game ever" - common files.
 
-%description common -l pl
-"Najwa縩iejsza gra wszechczas體 na PC" - pliki wsp髄ne.
+%description common -l pl.UTF-8
+"Najwa偶niejsza gra wszechczas贸w na PC" - pliki wsp贸lne.
 
 %package svga
 Summary:	Quake for Linux - svgalib version
-Summary(pl):	Quake dla Linuksa - wersja korzystaj眂a z svgalib
+Summary(pl.UTF-8):   Quake dla Linuksa - wersja korzystaj膮ca z svgalib
 License:	GPL
 Group:		Applications/Games
 Requires:	quake-common
@@ -59,12 +59,12 @@ Requires:	quake-common
 %description svga
 "The most important PC game ever" - PC ZONE SVGA client.
 
-%description svga -l pl
-"Najwa縩iejsza gra wszechczas體 na PC" - klient PC ZONE dla SVGA.
+%description svga -l pl.UTF-8
+"Najwa偶niejsza gra wszechczas贸w na PC" - klient PC ZONE dla SVGA.
 
 %package X11
 Summary:	Quake for Linux - X11
-Summary(pl):	Quake dla Linuksa - X11
+Summary(pl.UTF-8):   Quake dla Linuksa - X11
 License:	GPL
 Group:		Applications/Games
 Requires:	quake-common
@@ -72,12 +72,12 @@ Requires:	quake-common
 %description X11
 "The most important PC game ever" - PC ZONE X11 client.
 
-%description X11 -l pl
-"Najwa縩iejsza gra wszechczas體 na PC" - klient PC ZONE dla X11.
+%description X11 -l pl.UTF-8
+"Najwa偶niejsza gra wszechczas贸w na PC" - klient PC ZONE dla X11.
 
 %package GL
 Summary:	Quake for Linux - GL
-Summary(pl):	Quake dla Linuksa - GL
+Summary(pl.UTF-8):   Quake dla Linuksa - GL
 License:	GPL
 Group:		Applications/Games
 Requires:	OpenGL
@@ -86,12 +86,12 @@ Requires:	quake-common
 %description GL
 "The most important PC game ever" - PC ZONE GL client.
 
-%description GL -l pl
-"Najwa縩iejsza gra wszechczas體 na PC" - klient PC ZONE dla GL.
+%description GL -l pl.UTF-8
+"Najwa偶niejsza gra wszechczas贸w na PC" - klient PC ZONE dla GL.
 
 %package PAK
 Summary:	Quake for Linux - shareware episode
-Summary(pl):	Quake dla Linuksa - epizod shareware
+Summary(pl.UTF-8):   Quake dla Linuksa - epizod shareware
 License:	non-commercial
 Group:		Applications/Games
 Requires:	quake-common
@@ -100,9 +100,9 @@ Requires:	quake-common
 "The most important PC game ever" - PC ZONE PAK files containing one
 shareware episode.
 
-%description PAK -l pl
-"Najwa縩iejsza gra wszechczas體 na PC" - pliki PC ZONE PAK,
-zawieraj眂e 1 epizod shareware.
+%description PAK -l pl.UTF-8
+"Najwa偶niejsza gra wszechczas贸w na PC" - pliki PC ZONE PAK,
+zawieraj膮ce 1 epizod shareware.
 
 %prep
 %setup -q -c -a 1
