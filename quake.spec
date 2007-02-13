@@ -1,5 +1,5 @@
 Summary:	Quake for Linux
-Summary(pl.UTF-8):   Quake dla Linuksa
+Summary(pl.UTF-8):	Quake dla Linuksa
 Name:		quake
 Version:	1.06
 Release:	4
@@ -39,7 +39,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %package common
 Summary:	Quake for Linux - common files
-Summary(pl.UTF-8):   Quake dla Linuksa - pliki wspólne
+Summary(pl.UTF-8):	Quake dla Linuksa - pliki wspólne
 License:	GPL
 Group:		Applications/Games
 
@@ -51,7 +51,7 @@ Group:		Applications/Games
 
 %package svga
 Summary:	Quake for Linux - svgalib version
-Summary(pl.UTF-8):   Quake dla Linuksa - wersja korzystająca z svgalib
+Summary(pl.UTF-8):	Quake dla Linuksa - wersja korzystająca z svgalib
 License:	GPL
 Group:		Applications/Games
 Requires:	quake-common
@@ -64,7 +64,7 @@ Requires:	quake-common
 
 %package X11
 Summary:	Quake for Linux - X11
-Summary(pl.UTF-8):   Quake dla Linuksa - X11
+Summary(pl.UTF-8):	Quake dla Linuksa - X11
 License:	GPL
 Group:		Applications/Games
 Requires:	quake-common
@@ -77,7 +77,7 @@ Requires:	quake-common
 
 %package GL
 Summary:	Quake for Linux - GL
-Summary(pl.UTF-8):   Quake dla Linuksa - GL
+Summary(pl.UTF-8):	Quake dla Linuksa - GL
 License:	GPL
 Group:		Applications/Games
 Requires:	OpenGL
@@ -91,7 +91,7 @@ Requires:	quake-common
 
 %package PAK
 Summary:	Quake for Linux - shareware episode
-Summary(pl.UTF-8):   Quake dla Linuksa - epizod shareware
+Summary(pl.UTF-8):	Quake dla Linuksa - epizod shareware
 License:	non-commercial
 Group:		Applications/Games
 Requires:	quake-common
