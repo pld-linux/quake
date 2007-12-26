@@ -1,10 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Quake svga
 Comment=Quake for Linux - svgalib version
 Comment[pl]=Quake dla Linuxa - wersja svgalib
 Exec=squake
-Icon=quake.png
+Icon=quake
 Terminal=false
 Type=Application
 # vi: encoding=utf-8

@@ -1,10 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=QuakeGL
 Comment=Quake for Linux - GL version
 Comment[pl]=Quake dla Linuxa - wersja GL
 Exec=glquake.glx
-Icon=quake.png
+Icon=quake
 Terminal=false
 Type=Application
 # vi: encoding=utf-8

@@ -1,10 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Quake X11
 Comment=Quake for Linux - X11 version
 Comment[pl]=Quake dla Linuxa - wersja X11
 Exec=quake.x11
-Icon=quake.png
+Icon=quake
 Terminal=false
 Type=Application
 # vi: encoding=utf-8
